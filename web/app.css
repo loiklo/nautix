@@ -154,7 +154,18 @@ table.grid {
 .grid .names th.corner { padding: 2px 3px; }
 .grid th.corner select { width: 100%; padding: 1px 2px; }
 
-.grid tr.group th, .grid tr.group td { background: var(--group); font-weight: 600; }
+/* A group row is a single cell spanning the whole line. Its name is a
+   zero-width block whose text overflows on one line: it never widens a column,
+   and it sticks to the left edge when scrolling sideways. */
+.grid tr.group th { position: static; min-width: 0; background: var(--group); font-weight: 600; }
+.grid tr.group th > div {
+  position: sticky;
+  left: 6px;
+  width: 0;
+  max-width: none;
+  white-space: nowrap;
+  overflow-wrap: normal;
+}
 .grid tr[data-skill] > th { cursor: pointer; overflow-wrap: anywhere; }
 .grid tr.selected > th { background: var(--selected); font-weight: 600; }
 

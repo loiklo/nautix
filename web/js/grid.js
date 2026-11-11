@@ -101,8 +101,7 @@ export default {
           students.map((s) => h('th', { 'data-progress': s.id }, `${progress(s.id, skillIds)} %`)))),
       h('tbody', {}, groups.map(({ group, skills }) => [
         h('tr', { class: 'group' },
-          h('th', {}, h('div', {}, group.name)),
-          students.length ? h('td', { colspan: students.length }) : null),
+          h('th', { colspan: students.length + 1 }, h('div', {}, group.name))),
         skills.map((skill) => h('tr', { 'data-skill': skill.id },
           h('th', {}, h('div', {}, skill.name)),
           students.map((s) => h('td', { 'data-cell': statusKey(s.id, skill.id) },
