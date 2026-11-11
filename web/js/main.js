@@ -17,6 +17,19 @@ const ROUTES = [
   { hash: 'admin', view: admin, link: 'admin-link', adminOnly: true },
 ];
 
+// Keep the page exactly as tall as the visible area (see body in app.css).
+// After a rotation iOS reports the new height a moment late, hence the second pass.
+function setAppHeight() {
+  document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+}
+setAppHeight();
+window.addEventListener('resize', setAppHeight);
+window.addEventListener('orientationchange', () => {
+  setAppHeight();
+  setTimeout(setAppHeight, 300);
+});
+window.addEventListener('pageshow', setAppHeight);
+
 const main = document.getElementById('main');
 let loggedIn = false;
 let renderedRoute = null;

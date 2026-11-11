@@ -29,14 +29,16 @@ html, body {
   overscroll-behavior: none; /* no bounce at the edges (iOS) */
 }
 
-/* The body is pinned to the visible area (not sized with vh/dvh units, which
-   on mobile browsers can include the part hidden behind the address bar or
-   the home indicator and push the footer out of view). Only <main> scrolls. */
+/* The body is exactly as tall as the visible area, so the footer is never
+   pushed out of view. --app-height is set from window.innerHeight (see
+   main.js) because vh/dvh units can include the part hidden behind the
+   browser bars on mobile; 100dvh is only the fallback. Do NOT use
+   position: fixed here: after a rotation iOS Safari then shifts the touch
+   targets vertically. Only <main> scrolls. */
 body {
-  position: fixed;
-  inset: 0;
   display: flex;
   flex-direction: column;
+  height: var(--app-height, 100dvh);
   background: var(--bg);
   color: var(--text);
   font: 14px/1.3 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
