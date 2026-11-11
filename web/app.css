@@ -29,10 +29,14 @@ html, body {
   overscroll-behavior: none; /* no bounce at the edges (iOS) */
 }
 
+/* The body is pinned to the visible area (not sized with vh/dvh units, which
+   on mobile browsers can include the part hidden behind the address bar or
+   the home indicator and push the footer out of view). Only <main> scrolls. */
 body {
+  position: fixed;
+  inset: 0;
   display: flex;
   flex-direction: column;
-  height: 100dvh;
   background: var(--bg);
   color: var(--text);
   font: 14px/1.3 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
