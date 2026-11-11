@@ -29,7 +29,7 @@ export function initPWA() {
     document.documentElement.classList.add('standalone');
     document.getElementById('install-link').hidden = true; // already installed: no install icon
     document.querySelector('meta[name="viewport"]').setAttribute('content',
-      'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
+      'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
   }
 }
 
