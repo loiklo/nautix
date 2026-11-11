@@ -17,12 +17,33 @@
   <header>
     <span class="brand">Nautix</span>
     <nav id="tabs"></nav>
+    <a href="#/gestion" id="manage-link" class="icon-link" title="Gestion" aria-label="Gestion">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" stroke-width="3.2" stroke-dasharray="3.53 3.54" stroke-dashoffset="1.77"/>
+        <circle cx="12" cy="12" r="5.5" stroke-width="4"/>
+      </svg>
+    </a>
+    <a href="#/admin" id="admin-link" class="icon-link" title="Administration" aria-label="Administration" hidden>
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z"/>
+        <path d="M8.5 12l2.5 2.5 4.5-5"/>
+      </svg>
+    </a>
   </header>
   <main id="main"></main>
   <footer>
     <span id="me"></span>
     <span id="conn" title="État de la synchronisation"></span>
-    <a href="#" id="logout">Déconnexion</a>
+    <span class="footer-end">
+      <a href="#/pwa" id="install-link" class="icon-link" title="Installer l’application" aria-label="Installer l’application">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 3v12"/>
+          <path d="M7 10.5l5 5 5-5"/>
+          <path d="M4 16.5v3.5h16v-3.5"/>
+        </svg>
+      </a>
+      <a href="#" id="logout">Déconnexion</a>
+    </span>
   </footer>
   <script type="module" src="js/main.js"></script>
 </body>

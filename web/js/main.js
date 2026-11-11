@@ -11,9 +11,10 @@ const ROUTES = [
   { hash: '', label: 'Suivi', view: grid },
   { hash: 'synthese', label: 'Synthèse', view: summary },
   { hash: 'journal', label: 'Journal', view: journal },
-  { hash: 'gestion', label: 'Gestion', view: manage },
-  { hash: 'pwa', label: 'PWA', view: pwa },
-  { hash: 'admin', label: 'Admin', view: admin, adminOnly: true },
+  // Reached through icons instead of tabs: header (manage, admin) and footer (install).
+  { hash: 'gestion', view: manage, link: 'manage-link' },
+  { hash: 'pwa', view: pwa, link: 'install-link' },
+  { hash: 'admin', view: admin, link: 'admin-link', adminOnly: true },
 ];
 
 const main = document.getElementById('main');
@@ -57,8 +58,12 @@ function render() {
   if (sameRoute) main.scrollTo(scrollLeft, scrollTop);
 
   document.getElementById('tabs').replaceChildren(...ROUTES
-    .filter((r) => !r.adminOnly || store.me.is_admin)
+    .filter((r) => r.label)
     .map((r) => h('a', { href: `#/${r.hash}`, class: r === route ? 'active' : '' }, r.label)));
+  for (const r of ROUTES.filter((r) => r.link)) {
+    document.getElementById(r.link).classList.toggle('active', r === route);
+  }
+  document.getElementById('admin-link').hidden = !store.me.is_admin;
   document.getElementById('me').textContent = store.me.name;
 }
 
