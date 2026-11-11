@@ -135,7 +135,8 @@ func (a *Auth) Login(w http.ResponseWriter, r *http.Request, name, password stri
 
 	var id int64
 	var hash string
-	err := a.DB.QueryRow("SELECT id, password_hash FROM instructors WHERE name = ?", name).Scan(&id, &hash)
+	// Case-insensitive on purpose, whatever the collation of the column.
+	err := a.DB.QueryRow("SELECT id, password_hash FROM instructors WHERE LOWER(name) = LOWER(?)", name).Scan(&id, &hash)
 	if errors.Is(err, sql.ErrNoRows) {
 		// Spend the same time as a real check so unknown names are not revealed.
 		bcrypt.CompareHashAndPassword([]byte("$2a$10$CwTycUXWue0Thq9StjUM0uJ8rT5Y0jH0xhHqzFKdQF5n0yQ3N3s3e"), []byte(password))
