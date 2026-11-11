@@ -60,6 +60,23 @@ header {
   background: var(--header);
   border-bottom: 1px solid var(--button-line);
 }
+/* iOS 27 beta draws a colored shadow over the status bar of installed apps.
+   This strip, painted in the header color over that area, counteracts it.
+   Absolute, not fixed: position: fixed shifts touch targets after a rotation on iOS. */
+#status-bar-tint { display: none; }
+@media (display-mode: standalone) and (orientation: portrait) {
+  .is-ios #status-bar-tint {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 2000;
+    pointer-events: none;
+    background-color: var(--header);
+  }
+}
 .brand { font-weight: 700; padding: 6px 0; }
 [hidden] { display: none !important; }
 /* Icon links: admin (always at the right of the header) and install (footer). */
