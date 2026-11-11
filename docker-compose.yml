@@ -1,0 +1,35 @@
+services:
+  app:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PORT:-8080}:8080"   # plain HTTP: put the TLS reverse proxy in front
+    environment:
+      DB_HOST: db
+      DB_PORT: "3306"
+      DB_USER: nautix
+      DB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+      DB_NAME: nautix
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_DATABASE: nautix
+      MARIADB_USER: nautix
+      MARIADB_PASSWORD: ${DB_PASSWORD:?set DB_PASSWORD in .env}
+      MARIADB_RANDOM_ROOT_PASSWORD: "1"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db-data:
