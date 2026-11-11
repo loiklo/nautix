@@ -131,6 +131,7 @@ button.primary { background: var(--primary); border-color: #9cc9a9; font-weight:
 table.grid {
   border-collapse: separate; /* required for sticky cells to keep their borders */
   border-spacing: 0;
+  margin: 0 auto; /* centered when narrower than the screen, scrolls when wider */
 }
 .grid th, .grid td {
   border-right: 1px solid var(--line);
@@ -221,7 +222,7 @@ table.grid {
 
 /* ---- other pages ---- */
 
-.page { padding: 8px; max-width: 900px; }
+.page { padding: 8px; max-width: 900px; margin: 0 auto; }
 .page h2 { margin: 0 0 4px; font-size: 15px; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 8px; }
 .block { margin-bottom: 14px; }
