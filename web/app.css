@@ -52,6 +52,9 @@ html.standalone { touch-action: manipulation; }
 /* ---- fixed header and footer; only <main> scrolls ---- */
 
 header {
+  position: sticky; /* sticky, not fixed: fixed shifts touch targets after a rotation on iOS */
+  top: 0;
+  z-index: 5;
   flex: none;
   display: flex;
   align-items: center;
