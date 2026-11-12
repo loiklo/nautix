@@ -64,6 +64,6 @@ func main() {
 
 	addr := env("LISTEN_ADDR", ":8080")
 	log.Printf("nautix listening on %s (plain HTTP)", addr)
-	server := &http.Server{Addr: addr, Handler: mux, ReadHeaderTimeout: 10 * time.Second}
+	server := &http.Server{Addr: addr, Handler: logRequests(mux), ReadHeaderTimeout: 10 * time.Second}
 	log.Fatal(server.ListenAndServe())
 }

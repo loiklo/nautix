@@ -83,7 +83,9 @@ func (a *Auth) setCookie(w http.ResponseWriter, value string, maxAge int) {
 	})
 }
 
-func clientIP(r *http.Request) string {
+// ClientIP returns the address used to identify a client: the first entry of
+// X-Forwarded-For when a reverse proxy sets it, otherwise the peer address.
+func ClientIP(r *http.Request) string {
 	if fwd := r.Header.Get("X-Forwarded-For"); fwd != "" {
 		return strings.TrimSpace(strings.Split(fwd, ",")[0])
 	}
@@ -128,7 +130,7 @@ func (a *Auth) clearFailures(key string) {
 
 // Login checks the credentials, opens a session and sets the session cookie.
 func (a *Auth) Login(w http.ResponseWriter, r *http.Request, name, password string) error {
-	key := clientIP(r) + "|" + strings.ToLower(name)
+	key := ClientIP(r) + "|" + strings.ToLower(name)
 	if a.throttled(key) {
 		return ErrThrottled
 	}
