@@ -71,6 +71,9 @@ export default {
           h('li', {}, h('b', {}, 'Android (Chrome) : '), 'menu ⋮ puis « Installer l’application » ou « Ajouter à l’écran d’accueil ».'),
           h('li', {}, h('b', {}, 'Ordinateur (Chrome, Edge) : '), 'icône d’installation à droite de la barre d’adresse, ou menu puis « Installer Nautix ».'),
           h('li', {}, h('b', {}, 'Firefox sur Android : '), 'menu ⋮ puis « Ajouter à l’écran d’accueil ».')),
+        h('p', {}, h('b', {}, 'Android affiche « Appli non sécurisée bloquée » (Google Play Protect) ? '),
+          'Le blocage vient du navigateur utilisé (souvent Samsung Internet), pas de Nautix. Ouvrez cette page dans ',
+          h('b', {}, 'Chrome'), ' et refaites l’installation depuis son menu ⋮.'),
         h('p', { class: 'muted' }, 'L’application est peut-être déjà installée sur cet appareil.'));
     }
   },
