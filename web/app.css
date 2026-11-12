@@ -18,6 +18,14 @@
   --acquired: #cfecc4;
   --mastered: #a3d99b; /* same hue as "acquired", slightly deeper */
   --names-height: 36px;
+  /* Areas hidden by the notch, the Dynamic Island, the camera, the rounded
+     corners and the home indicator. They are 0 where there is none. The page
+     extends edge to edge (viewport-fit=cover), so everything that must stay
+     readable and tappable is kept inside these margins. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 * { box-sizing: border-box; }
@@ -59,7 +67,8 @@ header {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: env(safe-area-inset-top) max(8px, env(safe-area-inset-right)) 0 max(8px, env(safe-area-inset-left));
+  /* The header color reaches the screen edges; its content stays clear of the notch. */
+  padding: var(--safe-top) max(8px, var(--safe-right)) 0 max(8px, var(--safe-left));
   background: var(--header);
   border-bottom: 1px solid var(--button-line);
 }
@@ -74,7 +83,7 @@ header {
     top: 0;
     left: 0;
     right: 0;
-    height: env(safe-area-inset-top, 0px);
+    height: var(--safe-top);
     z-index: 2000;
     pointer-events: none;
     background-color: var(--header);
@@ -98,6 +107,9 @@ nav a.active { border-bottom-color: #7fb2d3; font-weight: 600; background: rgba(
 main {
   flex: 1;
   min-height: 0;
+  /* A margin, not a padding: scrolled content is clipped at the safe edge
+     instead of sliding under the notch in landscape. */
+  margin: 0 var(--safe-right) 0 var(--safe-left);
   overflow: auto;
   overscroll-behavior: none;
 }
@@ -108,7 +120,7 @@ footer {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 4px max(10px, env(safe-area-inset-right)) calc(4px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+  padding: 4px max(10px, var(--safe-right)) calc(4px + var(--safe-bottom)) max(10px, var(--safe-left));
   background: var(--footer);
   border-top: 1px solid var(--line);
   font-size: 13px;
