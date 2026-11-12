@@ -1,8 +1,6 @@
 // Administration view: instructors, open sessions and bulk deletions.
-import { act, api, formatDate, h, store } from './core.js';
+import { act, api, formatDate, h } from './core.js';
 import { iconButton } from './manage.js';
-
-const ROOT_ADMIN = 'Alex'; // the server enforces the rules; this only hides impossible actions
 
 let instructors = [];
 let sessions = [];
@@ -26,8 +24,9 @@ function createInstructor(event) {
 }
 
 function instructorRow(i) {
-  const isRoot = i.name === ROOT_ADMIN;
-  const canSetPassword = !isRoot || store.me.name === ROOT_ADMIN;
+  // The server decides; the page only hides actions it would refuse anyway.
+  const isRoot = i.protected;
+  const canSetPassword = i.can_password;
   const update = (body) => act(() => api('PUT', `/api/admin/instructors/${i.id}`, body));
   return h('tr', {},
     h('td', {}, i.name),

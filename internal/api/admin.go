@@ -12,10 +12,14 @@ import (
 const rootAdmin = "Alex"
 
 func (s *Server) listInstructors(w http.ResponseWriter, r *http.Request) {
+	// The frontend is served to everyone, so it must not know which account is
+	// special: the server states, per account, what the current admin may do.
 	type instructor struct {
-		ID      int64  `json:"id"`
-		Name    string `json:"name"`
-		IsAdmin bool   `json:"is_admin"`
+		ID          int64  `json:"id"`
+		Name        string `json:"name"`
+		IsAdmin     bool   `json:"is_admin"`
+		Protected   bool   `json:"protected"`    // cannot be renamed, demoted or deleted
+		CanPassword bool   `json:"can_password"` // the current user may change its password
 	}
 	out := []instructor{}
 	rows, err := s.DB.Query("SELECT id, name, is_admin FROM instructors ORDER BY name")
@@ -24,9 +28,12 @@ func (s *Server) listInstructors(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer rows.Close()
+	me := auth.UserFrom(r)
 	for rows.Next() {
 		var i instructor
 		rows.Scan(&i.ID, &i.Name, &i.IsAdmin)
+		i.Protected = i.Name == rootAdmin
+		i.CanPassword = !i.Protected || me.Name == rootAdmin
 		out = append(out, i)
 	}
 	writeJSON(w, out)
